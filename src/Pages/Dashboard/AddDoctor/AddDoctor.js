@@ -1,7 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
 import Loading from "../../Shared/Loading/Loading";
 
 const AddDoctor = () => {

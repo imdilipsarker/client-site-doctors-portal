@@ -2,13 +2,14 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import { useQuery } from "react-query";
 import Loading from "../../Shared/Loading/Loading";
+import { Link } from "react-router-dom";
 
 const MyAppointment = () => {
   const { user } = useContext(AuthContext);
 
   const url = `http://localhost:5000/bookings?email=${user?.email}`;
 
-  const { data: bookings = [{}, Loading] } = useQuery({
+  const { data: bookings = [], isLoading } = useQuery({
     queryKey: ["bookings", user?.email],
     queryFn: async () => {
       const res = await fetch(url, {
@@ -20,7 +21,8 @@ const MyAppointment = () => {
       return data;
     },
   });
-  if (Loading) {
+
+  if (isLoading) {
     return <Loading></Loading>;
   }
 
@@ -36,6 +38,7 @@ const MyAppointment = () => {
               <th>Treatment</th>
               <th>Date</th>
               <th>Time</th>
+              <th>Payment</th>
             </tr>
           </thead>
           <tbody>
@@ -46,6 +49,16 @@ const MyAppointment = () => {
                 <td>{booking.treatment}</td>
                 <td>{booking.appointmentDate}</td>
                 <td>{booking.slot}</td>
+                <td>
+                  {booking.price && !booking.paid && (
+                    <Link to={`/dashboard/payment/${booking._id}`}>
+                      <button className="btn btn-sm btn-primary">Pay</button>
+                    </Link>
+                  )}
+                  {booking.price && booking.paid && (
+                    <span className="text-primary">Paid</span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

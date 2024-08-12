@@ -22,7 +22,6 @@ const Banner = () => {
 						Protect your smile and keep it healthy, with the largest network of
 						dentist nationwide, quick service and personalized service.
 					</p>
-					<p className="py-6"></p>
 					<PrimaryButton>Get Started</PrimaryButton>
 				</div>
 			</div>
